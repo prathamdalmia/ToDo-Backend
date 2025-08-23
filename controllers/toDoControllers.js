@@ -16,8 +16,8 @@ const addTask = asynchandler(async (req, res)=>{
 
 const getTask = asynchandler(async (req , res) => {
     try{
-        const toDo = await ToDo.find({username : req.body.username}).sort({task : -1})
-        res.status(201).json(toDo)
+        const toDo = await ToDo.find({username : req.body.username})
+        return res.status(200).json(toDo)
     }catch(error){
         res.status(500).json({error : error.message})
     }
@@ -99,11 +99,34 @@ const searchTask = asynchandler(async (req ,res) =>{
 })
 
 
+const toggleIsCompletion = asynchandler(async (req ,res) => {
+    try{
+        const id = req.body.id
+        if (!id) {
+            return res.status(400).json({ error: 'Task ID is required' })
+        }
+        const task = await ToDo.findById(id)
+        if(!task){
+            res.status(404).json({error : 'Something Went Wrong'})
+            return
+        }
+        task.isCompleted = !task.isCompleted
+        await task.save()
+        res.status(200).json({message : 'Change Successful'})
+
+    }catch(err){
+        res.status(500).json({error : err.message})
+    }
+
+})
+
+
 module.exports = {
     addTask,
     getTask,
     getTaskById,
     updateTask,
     deleteTask,
-    searchTask
+    searchTask,
+    toggleIsCompletion
 }

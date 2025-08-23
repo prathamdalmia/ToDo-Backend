@@ -14,12 +14,14 @@ const getTaskById = toDocontrollers.getTaskById
 const updateTask = toDocontrollers.updateTask
 const deleteTask = toDocontrollers.deleteTask
 const searchTask = toDocontrollers.searchTask
+const toggleIsCompletion = toDocontrollers.toggleIsCompletion
 
 router.post('/addTask',validateToken,addTask);
 router.post('/gettask',validateToken,getTask);
-router.put('/getTaskById',validateToken,getTaskById);
+router.post('/getTaskById',validateToken,getTaskById);
 router.put('/update',validateToken,updateTask);
 router.delete('/delete',validateToken,deleteTask);
 router.post('/search',validateToken,searchTask);
+router.post('/toggle' ,validateToken,toggleIsCompletion )
 
 module.exports = router; 

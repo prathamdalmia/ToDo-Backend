@@ -19,6 +19,10 @@ const toDoSchema = new mongoose.Schema({
         type : String ,
         trim : true
     },
+    isCompleted : {
+        type : Boolean,
+        default : false
+    },
     username : {
         type : String,
         trim : true
